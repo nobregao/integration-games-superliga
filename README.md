@@ -49,3 +49,24 @@ Para facilitar a execução, utilize a tecla de atalho:
 - No macOS: Pressione `Cmd + R`.
 
 Lembre-se de verificar regularmente as atualizações da API ou ajustar os parâmetros conforme necessário para garantir a precisão do calendário.
+
+## Automatizando a Execução
+
+Você pode configurar uma trigger no Google Apps Script. Isso permitirá que o script seja executado automaticamente. Siga os passos abaixo para configurar uma trigger:
+
+
+1. No Editor de Scripts do Google, vá até o menu "Editar" e selecione "Configurações do Projeto".
+
+2. Na guia "Configurações do Projeto", clique na seção "Triggers".
+
+3. No canto inferior direito, clique no botão "+ Adicionar Trigger".
+
+4. Selecione a função a ser executada, que neste caso é `main`.
+
+5. Escolha o tipo de evento, como "Temporizador" ou "Agendado".
+
+6. Configure a frequência desejada, por exemplo, a cada 4 horas.
+
+7. Clique em "Salvar".
+
+Agora, o script será executado automaticamente de acordo com a configuração da trigger. Certifique-se de ajustar as permissões necessárias para que a trigger possa acessar e modificar o calendário do Google associado.
