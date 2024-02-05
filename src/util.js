@@ -6,6 +6,10 @@ const TIME_END_GAME = 2;
 
 const DAYS_FOR_GENERATE_GAMES = getDaysToSearch(7);
 
+const URLS = {
+  gamesTable: 'https://superliga.cbv.com.br/tabela-de-jogos-masculino',
+}
+
 
 /** 
  * date / datetime 
@@ -43,22 +47,18 @@ const getCalendarHobbies = _ => CalendarApp.getCalendarById(ID_CALENDAR_HOBBIES)
 
 function buildDescriptionCalendarEvent(home, guest, channel, gender) {
 
-  const gamesTable = {
-    male: 'https://superliga.cbv.com.br/tabela-de-jogos-masculino',
-    female: 'https://superliga.cbv.com.br/tabela-de-jogos-feminino'
-  }
-
   const _createBold = (text) => `<span><b>${text}</b></span>`;
   const _createAnchor = (text, url) => `<a href="${url}">${text}</a>`;
 
-  let urls = "";
+  let urlsDescription = "";
 
   if (channel && (channel = channel.toLowerCase())) {
 
     const CHANNELS = [{
       channel: "sportv",
       text: "globoplay sportv2",
-      url: "https://globoplay.globo.com/sportv-2/ao-vivo/7339117/"
+      url: "https://globoplay.globo.com/sportv-2/ao-vivo/7339117/",
+      programacao: "https://globoplay.globo.com/programacao/7339117/"
     }, {
       channel: "volei brasil",
       text: "canal volei brasil",
@@ -66,16 +66,20 @@ function buildDescriptionCalendarEvent(home, guest, channel, gender) {
     }]
 
     CHANNELS.forEach(item => {
-      if (channel.indexOf(item.channel) >= 0)
-        urls += `\n${_createAnchor(item.text, item.url)}`;
+      if (channel.indexOf(item.channel) >= 0) {
+        urlsDescription += `\n${_createAnchor(item.text, item.url)}`;
+        if (item.programacao) {
+          urlsDescription += ` (${_createAnchor("programação", item.programacao)})`;
+        }
+      }
     });
   } else {
-    urls += `\n${_createBold("a definir transmissão")}`
+    urlsDescription += `\n${_createBold("a definir transmissão")}`
   }
 
   return `${_createBold(home)} vs ${_createBold(guest)}
-  \n${_createAnchor(`${gender}'s games table`, gamesTable[gender])}
-  ${urls}`;
+  \n${_createAnchor(`${gender}'s games table`, URLS.gamesTable)}
+  ${urlsDescription}`;
 }
 
 function createGamesCalendar(games) {
